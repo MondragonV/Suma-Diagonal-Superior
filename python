@@ -1,0 +1,43 @@
+import math
+
+# Función que determina si un número es primo
+def es_primo(num):
+    if num <= 1:
+        return False
+    for i in range(2, int(math.sqrt(num))+1):
+        if num % i == 0:
+            return False
+    return True
+
+# Solicitar la dimensión de la matriz al usuario
+while True:
+    try:
+        m = int(input("Ingrese la dimensión m de la matriz (mayor o igual a 3): "))
+        if m >= 3:
+            break
+        else:
+            print("La dimensión debe ser mayor o igual a 3")
+    except ValueError:
+        print("Ingrese un número entero válido")
+
+# Construir la matriz de númeos primos
+matriz = []
+num_primos = 0
+num = 2
+while num_primos < m*m:
+    if es_primo(num):
+        matriz.append(num)
+        num_primos += 1
+    num += 1
+matriz = [matriz[i:i+m] for i in range(0, len(matriz), m)]
+
+# Presentar la matriz en pantalla
+for fila in matriz:
+    print(" ".join("{:3d}".format(num) for num in fila))
+
+# Calcular la suma de los elementos en y por encima de la diagonal principal
+suma = 0
+for i in range(m):
+    for j in range(i, m):
+        suma += matriz[i][j]
+print("La suma de los elementos en y por encima de la diagonal principal es:", suma)
